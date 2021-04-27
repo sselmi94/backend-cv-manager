@@ -9,7 +9,8 @@ from .serializers import MyFileSerializer
 
 class Simple(APIView):
     parser_classes = (MultiPartParser, )
-
+    UPLOAD_FOLDER = "./upload"
+    fileName = ""
     def get(self, request):
         return Response({"content": "hi"})
 
@@ -18,9 +19,10 @@ class Simple(APIView):
         file_serializer = MyFileSerializer(data=request.data)
         if file_serializer.is_valid():
             file_serializer.save()
-            destination = open("./exp.pdf", 'wb+')
+            self.fileName = file_serializer.data["resume"]
+            destination = open( self.UPLOAD_FOLDER + self.fileName , 'wb+')
             for chunk in request.FILES["resume"].chunks():
-                destination.write(chunk)
+               destination.write(chunk)
             destination.close() 
             return Response(file_serializer.data)
         else:
