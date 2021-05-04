@@ -24,7 +24,7 @@ class Terme(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     def as_dict(self):
         return {
-            "id": self.id,
+            #"id": self.id,
             "title": self.title,
             "category": self.category.name
             # other stuff

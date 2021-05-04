@@ -15,10 +15,10 @@ class Simple(APIView):
     fileName = "/sselmi_eng_resume.pdf"
     objCvManagerUtilities = CvManagerUtilties()
     def get(self, request):
-        queryset = Terme.objects.all()
-        dictionaries = [ obj.as_dict() for obj in queryset]
+        #queryset = Terme.objects.all()
+        #dictionaries = [ obj.as_dict() for obj in queryset]
         target = self.UPLOAD_FOLDER + self.fileName
-        print(self.objCvManagerUtilities.parseCV(target))
+        dictionaries = self.objCvManagerUtilities.parseCV(target)
         return JsonResponse({"data":dictionaries})
 
     def post(self, request, *args, **kwargs):
