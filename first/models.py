@@ -22,6 +22,13 @@ class Category(models.Model):
 class Terme(models.Model):
     title =  models.CharField(max_length=255,null=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "category": self.category.name
+            # other stuff
+        }
 
 class Profil(models.Model):
     firstname = models.CharField(max_length=255, null=False)
