@@ -12,7 +12,7 @@ from .utilities import CvManagerUtilties
 class Simple(APIView):
     parser_classes = (MultiPartParser, )
     UPLOAD_FOLDER = "./upload"
-    fileName = "/sselmi_eng_resume.pdf"
+    fileName = "/sselmi.pdf"
     objCvManagerUtilities = CvManagerUtilties()
     def get(self, request):
         #queryset = Terme.objects.all()
@@ -32,8 +32,8 @@ class Simple(APIView):
             for chunk in request.FILES["resume"].chunks():
                destination.write(chunk)
             destination.close() 
-            self.objCvManagerUtilities.parseCV(targetPath)
-            return Response(file_serializer.data)
+            data = self.objCvManagerUtilities.parseCV(targetPath)
+            return JsonResponse({"extracted":data})
         else:
             return Response(file_serializer.errors)
         

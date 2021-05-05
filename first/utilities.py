@@ -68,7 +68,7 @@ class CvManagerUtilties():
         result = []
         for item in items:
             for currentTerme in item:
-                if text.find(currentTerme) != -1 or text.find(currentTerme.lower()) != -1:
+                if text.find(currentTerme) != -1 or text.lower().find(currentTerme.lower()) != -1:
                     iCategorySum += 1
             result.append({"name":categories[iCategory],"score":iCategorySum})
             iCategory += 1
