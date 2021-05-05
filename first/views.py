@@ -12,7 +12,7 @@ from .utilities import CvManagerUtilties
 class Simple(APIView):
     parser_classes = (MultiPartParser, )
     UPLOAD_FOLDER = "./upload"
-    fileName = "/sselmi.pdf"
+    fileName = "/sselmi_eng_resume.pdf"
     objCvManagerUtilities = CvManagerUtilties()
     def get(self, request):
         #queryset = Terme.objects.all()

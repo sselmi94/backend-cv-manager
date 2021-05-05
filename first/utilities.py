@@ -26,7 +26,7 @@ class CvManagerUtilties():
         return r.findall(string) 
     
     def extract_phone_number(self,text):
-        r = re.compile(r'(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})')
+        r = re.compile(r'([+(]?\d+[)\-]?[ \t\r\f\v]*[(]?\d{2,}[()\-]?[ \t\r\f\v]*\d{2,}[()\-]?[ \t\r\f\v]*\d*[ \t\r\f\v]*\d*[ \t\r\f\v]*)')
         phone_numbers = r.findall(text)
         return phone_numbers
     def extract_date(self,text):
@@ -188,3 +188,4 @@ class CvManagerUtilties():
             if debug:
                 return experience
 
+   
