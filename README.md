@@ -2,11 +2,8 @@
 This application is created using Django Rest Framework
 
 # Demo
-
 <!-- blank line -->
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="screen-capture.webm" type="video/webm">
-  </video>
-</figure>
+<div>
+  <image src="screen-capture.gif" alt="demo image" />  </div>
+
 <!-- blank line -->
