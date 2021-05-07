@@ -6,7 +6,8 @@ from .serializers import MyFileSerializer
 from .models import Terme
 from django.forms.models import model_to_dict
 from .utilities import CvManagerUtilties
-# Create your views here.
+import os
+
 
 
 class Simple(APIView):
@@ -22,7 +23,6 @@ class Simple(APIView):
         return JsonResponse({"data":dictionaries})
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
         file_serializer = MyFileSerializer(data=request.data)
         if file_serializer.is_valid():
             file_serializer.save()
@@ -32,6 +32,7 @@ class Simple(APIView):
             for chunk in request.FILES["resume"].chunks():
                destination.write(chunk)
             destination.close() 
+            os.remove(self.fileName.replace("/",""))
             data = self.objCvManagerUtilities.parseCV(targetPath)
             return JsonResponse({"extracted":data})
         else:
