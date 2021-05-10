@@ -18,6 +18,7 @@ class CvManagerUtilties():
     lines = []
     sentences = []
     tokens = []
+    beforeToken = []
     nlp = spacy.load("fr_core_news_sm")
 
     def sayHello(self):
@@ -55,6 +56,7 @@ class CvManagerUtilties():
         text = mytext
         text = text.lower()
         self.lines = [el.strip() for el in text.split("\n") if len(el) > 0]
+        self.beforeToken = self.lines
         self.lines = [nltk.word_tokenize(el) for el in self.lines]
         self.lines = [nltk.pos_tag(el) for el in self.lines]
         # Split/Tokenize into sentences (List of strings)
@@ -64,7 +66,9 @@ class CvManagerUtilties():
         self.tokens = self.sentences
         experience = self.getExperience(text, True)
         extractedname = self.getName(text, True)
+        
         job = self.getProfilHeader(text)
+        #self.getQualification(text,"BACHELOR","BACHELOR")
         #self.extract_education(text)
         # extract_names(text)
         # spacy
@@ -262,8 +266,78 @@ class CvManagerUtilties():
             jobs.append("NA")
         return jobs[0]
 
-    def extract_education(self,resume_text):
-        r = re.compile(r'[A-Z]+(((20|19)(\d{2})))')
-        annee = r.findall(resume_text)
-        print(annee)
-        return annee       
+    def extract_education(self,input_text):
+        RESERVED_WORDS = [
+            'school',
+            'college',
+            'univers',
+            'academy',
+            'faculty',
+            'institute',
+            'faculdades',
+            'Schola',
+            'schule',
+            'lise',
+            'lyceum',
+            'lycee',
+            'polytechnic',
+            'kolej',
+            'ünivers',
+            'okul',
+        ]
+        organizations = []
+           # print(tagged_tokens)
+        r = re.compile(r'[(Diploma|\bBachelor\b)*\s+(\d+)]')
+        rs = r.findall(input_text)
+        print(rs)
+
+        return [] 
+
+    def getQualification(self,inputString,D1,D2):
+        #key=list(qualification.keys())
+        qualification={'institute':'','year':''}
+        nameofinstitutes=open('./assets/nameofinstitutes.txt','r').read().lower()#open file which contains keywords like institutes,university usually  fond in institute names
+        nameofinstitues=set(nameofinstitutes.split())
+        instiregex=r'INSTI: {<DT.>?<NNP.*>+<IN.*>?<NNP.*>?}'
+        chunkParser = nltk.RegexpParser(instiregex)
+        
+        
+        try:           
+            index=[]
+            line=[]#saves all the lines where it finds the word of that education
+            for ind, sentence in enumerate(self.lines):#find the index of the sentence where the degree is find and then analyse that sentence
+                sen=" ".join([words[0].lower() for words in sentence]) #string of words
+                print(sen)
+                if re.search(D1,sen) or re.search(D2,sen):
+                    index.append(ind)  #list of all indexes where word Ca lies
+            if index:#only finds for Ca rank and CA year if it finds the word Ca in the document
+                
+                for indextocheck in index:#checks all nearby lines where it founds the degree word.ex-'CA'
+                    for i in [indextocheck,indextocheck+1]: #checks the line with the keyword and just the next line to it
+                        try:
+                            try:
+                                wordstr=" ".join(words[0] for words in self.lines[i])#string of that particular line
+                            except:
+                                wordstr=""
+                            #if re.search(r'\D\d{1,3}\D',wordstr.lower()) and qualification['rank']=='':
+                                    #qualification['rank']=re.findall(r'\D\d{1,3}\D',wordstr.lower())
+                                    #line.append(wordstr)
+                            if re.search(r'\b[21][09][8901][0-9]',wordstr.lower()) and qualification['year']=='':
+                                    qualification['year']=re.findall(r'\b[21][09][8901][0-9]',wordstr.lower())
+                                    line.append(wordstr)
+                            chunked_line = chunkParser.parse(self.lines[i])#regex chunk for searching univ name
+                            for subtree in chunked_line.subtrees():
+                                    if subtree.label()=='INSTI':
+                                        for ind,leaves in enumerate(subtree):
+                                            if leaves[0].lower() in nameofinstitutes and leaves[1]=='NNP' and qualification['institute']=='':
+                                                qualification['institute']=' '.join([words[0]for words in subtree.leaves()])
+                                                line.append(wordstr)
+                                
+                        except Exception as e:
+                            print(e)
+
+        
+            print(list(set(line)))
+            print(qualification)
+        except Exception as e:
+            print(e)
