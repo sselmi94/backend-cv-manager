@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 import spacy
 import random
 import nltk
-from nltk.corpus import stopwords
 nltk.download("words")
 from pyresparser import ResumeParser
 import os
@@ -100,7 +99,10 @@ class CvManagerUtilties():
         location = self.extract_address(text)
 
         return {
-            "Nom": splited[0], "Prenom": splited[1], "Email": data['email'], "Telephone": data['mobile_number'],  "Adresse": location,
+            "Nom": splited[0], "Prenom": splited[1],
+            "Email": data['email'], 
+            "Telephone": data['mobile_number'], 
+            "Adresse": location,
             "Scores": result,
             "Parcours": data['experience'],
             "Experience": experience,
