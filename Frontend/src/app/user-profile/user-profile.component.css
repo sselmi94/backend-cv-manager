@@ -1,0 +1,76 @@
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  .btn {
+    border: 2px solid rgb(247, 29, 29);
+    color:  rgb(247, 29, 29);
+    background-color: white;
+    padding: 8px 40px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    
+  }
+  
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+  .card-category{
+      font-size:  15px !important; 
+  }
+  hr {
+    height: 1px;
+    margin: -0.5em 0;
+    padding: 3;
+    color: #F00;
+    background-color: #F00;
+    border: 0;
+  }
+  .button {
+    background-color: rgba(243, 7, 7, 0.842); /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  .button1 {padding: 6px 20px;}
+
+  .button2 {padding: 5px 7px;}
+
+  .purple-border textarea {
+    border: 1px solid #df490e;
+}
+
+textarea.textar {
+  white-space: normal;
+  resize:vertical;
+}
+.separatorDate{
+margin : 0 30px;
+}
+
+.dateInput {
+  margin: 0 0 0 0;
+}
+
+.uploadProgress {
+  margin: 0 0 0 40px;
+}
+
+.parseButton {
+  margin: 0 0 0 40px !important;
+}

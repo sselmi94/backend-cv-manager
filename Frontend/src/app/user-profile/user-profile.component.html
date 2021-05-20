@@ -1,0 +1,212 @@
+<div class="main-content">
+  <div class="container-fluid">
+
+    <!-- card body of uploading file -->
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">Submit Resume</h4>
+        </div>
+        <div class="card-body">
+          <div class="card-category">
+            <div class="upload-btn-wrapper">
+              <button class="btn" onclick="document.getElementById('getFile').click()">Upload a File</button>
+              <input type="file" (change)="upload($event.target.files)" id="getFile" />
+               <span class="uploadProgress" *ngIf="isfileLoaded">Upload Percent: {{percentDone}}%</span>
+               <button *ngIf="isfileLoaded" mat-raised-button type="submit" class="btn btn-danger pull-right parseButton" (click)="parse()">Parse</button>
+              </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+    <div *ngIf=isLoaded class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="card">
+          <div class="card-body">
+            <label style="color: rgb(10, 13, 54);"><b>About Me</b></label>
+            <form >
+              <!-- Profile and Years of exp-->
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                  <input matInput placeholder="profile" type="text" name="titre"  [(ngModel)]= "cvFile.basics.titre">
+                  </mat-form-field> 
+                </div>
+                
+                  <div class="col-md-5">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="years of experience" name="cvFile.numberOfYears" [(ngModel)]="cvFile.numberOfYears">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="fisrtName" type="text" name="fisrtName" [(ngModel)]= "cvFile.basics.name.firstName " >
+                  </mat-form-field>
+                </div>
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="lastName" type="text" name="surName" [(ngModel)]= "cvFile?.basics.name.surname" >
+                  </mat-form-field>
+                </div>
+              </div>
+              
+              <!-- email and phone -->
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                     <input  matInput placeholder="email address" name="email" [(ngModel)]="cvFile?.basics.email" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="phone Number" type="text" name="phone" [(ngModel)]= "cvFile?.basics.phone">
+                  </mat-form-field>
+                </div>
+              </div>
+              
+                <!-- Adress --> 
+              <div class="row">
+                <div class="col-md-10">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="adress" type="text" name="adresse" [(ngModel)]="cvFile?.basics.adresse" >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Education And Training --> 
+              <label style="color: rgb(10, 13, 54);"><b>
+                Formation & certification</b></label>
+                  <div class="card ">
+                    <textarea class="textar"  rows="6" cols="10" matInput placeholder="" name="education" [(ngModel)]= "cvFile.education"></textarea>
+                  </div>
+              
+                           
+              <!-- Technical skills --> 
+            
+              <label style="color: rgb(10, 13, 54);"><b>
+               Technical Skills</b></label>
+               <div class="card">
+                <textarea class="textar"  rows="6" cols="10" matInput placeholder="" name="techskills" [(ngModel)]= "cvFile.technicalcompetence"></textarea>
+              </div>
+              
+              <!-- Charte --> 
+
+              <label style="color: rgb(10, 13, 54);"><b>
+               Skills per area </b></label>
+               <div class="card" >
+                <ngx-charts-pie-chart
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="single"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [legendPosition]="legendPosition"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+                >
+              </ngx-charts-pie-chart>
+                </div>
+
+               <!-- functional skills --> 
+               <label style="color: rgb(10, 13, 54);"><b>
+                Functional Skills</b></label>
+                <div class="card">
+                 <textarea class="textar"  rows="6" cols="10" matInput placeholder="" name="funcskills" [(ngModel)]= "cvFile.functionalcompetence"></textarea>
+                </div>
+               
+                <!-- Professional experiences --> 
+              <label style="color: rgb(10, 13, 54);"><b>
+                  Professional experiences</b></label>
+               <div class="card">
+                <textarea class="textar"  rows="6" cols="10" matInput placeholder="" name="parsedExperience" [(ngModel)]= "cvFile.parsedExperience"></textarea>
+   
+                
+                <div *ngFor="let x of cvFile?.work_experience; let i=index" >
+                  <div class="card-header text-white" style="background-color:#f1ddc64f;">
+                  <form > 
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Company"  style="color:rgb(34, 34, 36)" name="organization{{i}}" [(ngModel)]="x.organization" type="text" [ngModelOptions]="{standalone: true}">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Function" style="color:rgb(34, 34, 36)" name="jobtitle{{i}}"  [(ngModel)]="x.jobtitle" type="text" [ngModelOptions]="{standalone: true}">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                 
+                  <div class="row dateInput" >
+                 <input id="start" type="text" name="date_start{{i}}" [(ngModel)]="x.date_start" [ngModelOptions]="{standalone: true}">
+                    <span class="separatorDate" style="color:rgb(34, 34, 36)">To</span>  
+                     <input id="da" type="text" name="date_end{{i}}"   [(ngModel)]="x.date_end" [ngModelOptions]="{standalone: true}">
+                   
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                      <textarea class="textar"  rows="6" cols="10" matInput placeholder="" name="text{{i}}"  [(ngModel)]="x.text" [ngModelOptions]="{standalone: true}"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  
+                
+                  <button type="button" class="close" aria-label="Close" (click)="removeExperience(i)">
+                    <span aria-hidden="true">&times;</span></button>
+                  <br><br><br>
+                  <hr style="height:2px"><br>
+                </form>
+                 </div>
+                  </div>
+                   
+              </div>
+                                
+                </form>   
+                <button type="submit" (click)="addExperience()" class="button button1">Add Experience</button>
+                <br><br>
+            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="submit()">Submit Profile</button>
+        
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- PDF Viewer --> 
+      <div class="col-md-7">
+        <div class="card card-profile" *ngIf="isfileLoaded">
+          <div class="card-avatar">
+            <a href="javascript:void(0)">
+              <img class="img" src="./assets/img/resume3.png" height="10" />
+            </a>
+          </div>
+          <div class="card-body">
+            <div class="pdf-container">
+              <pdf-viewer [src]="src" [original-size]="false"></pdf-viewer>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row" *ngIf= "showMsg">
+    <div class="alert alert-success" role="alert" >
+      profile added with success!
+    </div>
+  </div>
+   
+  </div>
+</div>
+<simple-notifications></simple-notifications>
+ 

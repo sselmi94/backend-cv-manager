@@ -1,0 +1,64 @@
+<div class="main-content">
+    <div class="col-md-11">
+        <input type="text" name="Name" class="form-control" placeholder="Filter..." [(ngModel)]="Name">
+    </div>
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">List of Candidates</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-warning">
+                                    <th >
+                                        Name
+                                    </th>
+                                    <th>
+                                        E-mail
+                                    </th>
+                                    <th>
+                                        Profile 
+                                    </th>
+                                    <th >
+                                        Experience years
+                                    </th>
+                                    <th>
+                                        Download
+                                    </th>
+                                    <th>
+                                        Edit 
+                                         
+                                    </th>
+                                    <th>
+                                        Remove
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let Profile of response  | filter:Name |  paginate: {itemsPerPage: 10, currentPage:p};  let i=index">
+                                        <td>{{ Profile._source.basics.name.firstName + " " + Profile._source.basics.name.surname  }} </td>
+                                        <td >{{ Profile._source.basics.email }}</td>
+                                        <td >{{ Profile._source.basics.Titre }}</td>
+                                        <td >{{ Profile._source.numberOfYears }}</td>
+                                        <td><a href="{{environmentVar}}/download/{{Profile?._source.pdfName}}"><img src= "https://img.icons8.com/office/34/download-from-cloud--v1.png"/></a></td>
+                                        <td><a routerLink="/user-profile/{{ Profile._id}}"><img src="https://img.icons8.com/color/30/000000/edit--v2.png"/></a>
+                                        </td>
+                                        <td><button class="button-remove" (click)="deleteDocument(Profile?._id, i, Profile?._source.pdfName)"><img src="https://img.icons8.com/color/30/000000/delete-forever.png"/>
+                                        </button></td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                            <pagination-controls  (pagechange)="p = $event"></pagination-controls>
+                        </div>
+                        <button class="button button2" style="float: right;" (click)="onSubmit()">Add new profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<simple-notifications></simple-notifications>
