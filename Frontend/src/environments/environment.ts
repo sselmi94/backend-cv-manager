@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  ElasticseachEndPoint : "http://dev.datarox.fr:9200",
+  ElasticseachEndPoint : "http://localhost:9200",
   SpringEndPoint: "http://localhost:8000/",
 };

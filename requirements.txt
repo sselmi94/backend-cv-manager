@@ -15,7 +15,7 @@ jsonschema
 nltk
 numpy
 pandas
-pdfminer.six==20181108
-spacy==2.3.5
-pyresparser
+pdfminer
+spacy
 gunicorn
+slate3k

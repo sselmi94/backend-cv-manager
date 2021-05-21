@@ -18,12 +18,14 @@ RUN pip install --upgrade pip
 COPY . $DockerHOME  
 # run this command to install all dependencies  
 RUN pip install -r requirements.txt  
+
 RUN python3 -m nltk.downloader averaged_perceptron_tagger
 RUN python3 -m nltk.downloader punkt
 RUN python3 -m nltk.downloader wordnet
-RUN python3 -m spacy download en_core_web_sm
+RUN python3 -m spacy download fr_core_news_sm
 RUN python3 -m nltk.downloader words
 RUN python3 -m nltk.downloader stopwords
+RUN python3 -m nltk.downloader maxent_ne_chunker
 # port where the Django app runs  
 EXPOSE 8000  
 # start server  
